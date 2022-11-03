@@ -22,6 +22,8 @@ import com.example.jiafeistore.ui.theme.JiafeiStoreTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ApiRequests.getProducts()
+        ApiRequests.getUsers()
         setContent {
             JiafeiStoreTheme {
                 // A surface container using the 'background' color from the theme
@@ -47,7 +49,12 @@ fun AppView() {
                     Text(text = "JiafeiStore", fontSize = 25.sp)
                 },
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(
+                        onClick = {
+                            /* TODO */
+                        },
+                        enabled = false,
+                    ) {
                         Icon(Icons.Filled.ShoppingCart , "backIcon", tint = MaterialTheme.colorScheme.onPrimary)
                     }
                 },
@@ -56,58 +63,61 @@ fun AppView() {
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
                 ),
             )
-        }, content = {
+        }) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.shopping),
+                contentDescription = "Online shopping image"
+            )
+            Text(
+                modifier = Modifier.padding(top = 16.dp),
+                text = "Nie kupuj kota w worku!",
+                style = MaterialTheme.typography.displayLarge,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+            Text(
+                modifier = Modifier.padding(top = 5.dp),
+                text = "Znajdź coś dla siebie. Przetestuj z możliwością darmowego zwrotu.",
+                color = MaterialTheme.colorScheme.onBackground
+            )
             Column(
                 modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.background),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.Start,
             ) {
-                Image(painter = painterResource(id = R.drawable.shopping), contentDescription = "Online shopping image" )
                 Text(
-                    modifier = Modifier.padding(top = 16.dp),
-                    text = "Nie kupuj kota w worku!",
-                    style = MaterialTheme.typography.displayLarge,
+                    text = "•  Najlepsze produkty",
                     color = MaterialTheme.colorScheme.onBackground
                 )
                 Text(
-                    modifier = Modifier.padding(top = 5.dp),
-                    text = "Znajdź coś dla siebie. Przetestuj z możliwością darmowego zwrotu.",
+                    text = "•  Przyjemnie",
                     color = MaterialTheme.colorScheme.onBackground
                 )
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalAlignment = Alignment.Start,
-                ) {
-                    Text(
-                        text = "•  Najlepsze produkty",
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                    Text(
-                        text = "•  Przyjemnie",
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                    Text(
-                        text = "•  Modnie",
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                }
-                Button(
-                    modifier = Modifier
-                        .padding(top = 5.dp)
-                        .fillMaxWidth(),
-                    onClick = {
-                        context.startActivity(Intent(context, AppActivity::class.java))
-                    }
-                ) {
-                    Text(
-                        text = "Zacznij zakupy",
-                        style = MaterialTheme.typography.titleMedium,
-                    )
-                }
+                Text(
+                    text = "•  Modnie",
+                    color = MaterialTheme.colorScheme.onBackground
+                )
             }
-        })
+            Button(
+                modifier = Modifier
+                    .padding(top = 5.dp)
+                    .fillMaxWidth(),
+                onClick = {
+                    context.startActivity(Intent(context, AppActivity::class.java))
+                }
+            ) {
+                Text(
+                    text = "Zacznij zakupy",
+                    style = MaterialTheme.typography.titleMedium,
+                )
+            }
+        }
+    }
 }
