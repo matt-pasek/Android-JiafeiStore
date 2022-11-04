@@ -22,7 +22,7 @@ data class User (
 
 interface ServerApi {
     companion object {
-        const val BASE_URL = "https://3065-2a02-a31a-c13f-3980-7164-8dfd-ec51-ba9c.eu.ngrok.io/api/"
+        const val BASE_URL = "https://7202-83-0-94-101.eu.ngrok.io/api/"
     }
 
     // products

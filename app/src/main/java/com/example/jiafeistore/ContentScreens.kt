@@ -201,11 +201,9 @@ fun UsersView(users: List<User>) {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    /*
                     val intent = Intent(context, AddElementActivity::class.java)
                     intent.putExtra("element", "user")
                     context.startActivity(intent)
-                    */
                 },
             ) {
                 Icon(Icons.Filled.Add, "add product")
