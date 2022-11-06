@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 
 typealias ComposableFun = @Composable () -> Unit
 
-var productsList: List<Product> = listOf()
-var usersList: List<User> = listOf()
+var productsList: MutableList<Product> = emptyList<Product>().toMutableList()
+var usersList: MutableList<User> = emptyList<User>().toMutableList()
 
 sealed class TabItem(var icon: ComposableFun, var title: String, var screen: ComposableFun) {
     object Shopping : TabItem({

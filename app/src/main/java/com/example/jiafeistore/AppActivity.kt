@@ -1,5 +1,6 @@
 package com.example.jiafeistore
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,6 +10,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.material3.Icon
@@ -20,9 +23,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import com.example.jiafeistore.ui.theme.JiafeiStoreTheme
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.launch
@@ -66,13 +71,27 @@ fun MainScreenPreview() {
 
 @Composable
 fun TopBar() {
+    val activity = (LocalContext.current as? Activity)
     SmallTopAppBar(
         title = {
             Text(text = "JiafeiStore", fontSize = 25.sp)
         },
         navigationIcon = {
-            IconButton(onClick = {}) {
-                Icon(Icons.Filled.ShoppingCart , "backIcon", tint = MaterialTheme.colorScheme.onPrimary)
+            IconButton(
+                onClick = {
+                    activity?.finish()
+                }
+            ) {
+                Icon(Icons.Filled.ArrowBack , "backIcon", tint = MaterialTheme.colorScheme.onPrimary)
+            }
+        },
+        actions = {
+            IconButton(
+                onClick = {
+                    activity?.recreate()
+                }
+            ) {
+                Icon(Icons.Filled.Refresh , "refreshIcon", tint = MaterialTheme.colorScheme.onPrimary)
             }
         },
         colors = TopAppBarDefaults.smallTopAppBarColors(

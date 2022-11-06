@@ -236,14 +236,15 @@ fun UsersView(users: List<User>) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductsView(products: List<Product>) {
+    val context = LocalContext.current
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /*
+                onClick = {
                     val intent = Intent(context, AddElementActivity::class.java)
                     intent.putExtra("element", "product")
                     context.startActivity(intent)
-                    */ },
+                },
             ) {
                 Icon(Icons.Filled.Add, "add product")
             }

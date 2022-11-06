@@ -22,12 +22,12 @@ data class User (
 
 interface ServerApi {
     companion object {
-        const val BASE_URL = "https://7202-83-0-94-101.eu.ngrok.io/api/"
+        const val BASE_URL = "https://050f-2a02-a31a-c13f-3980-6c97-e45f-477e-6f0c.eu.ngrok.io/api/"
     }
 
     // products
     @GET("products")
-    fun getProducts(): Call<List<Product>>
+    fun getProducts(): Call<MutableList<Product>>
 
     @GET("products/{id}")
     fun getProduct(@Path("id") id: Int): Call<Product>
@@ -46,13 +46,13 @@ interface ServerApi {
 
     // users
     @GET("users")
-    fun getUsers(): Call<List<User>>
+    fun getUsers(): Call<MutableList<User>>
 
     @GET("users/{id}")
     fun getUser(@Path("id") id: Int): Call<User>
 
     @POST("users")
-    fun addUser(@Body user: User): Call<User>
+    fun addUser(@Body user: User): Call<Int>
 
     @PUT("users/{id}")
     fun updateUser(@Path("id") id: Int, @Body user: User): Call<User>
