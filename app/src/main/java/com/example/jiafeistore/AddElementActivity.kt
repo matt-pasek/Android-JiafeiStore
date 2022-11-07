@@ -89,40 +89,110 @@ fun AddElement(element: String) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddProduct() {
-    var email by remember { mutableStateOf(TextFieldValue("")) }
-    var password by remember { mutableStateOf(TextFieldValue("")) }
-    var text by remember { mutableStateOf(TextFieldValue("")) }
+    var name by remember { mutableStateOf(TextFieldValue("")) }
+    var price by remember { mutableStateOf(TextFieldValue("")) }
+    var description by remember { mutableStateOf(TextFieldValue("")) }
+    var category by remember { mutableStateOf(TextFieldValue("")) }
+    var image by remember { mutableStateOf(TextFieldValue("")) }
+    val activity = (LocalContext.current as? Activity)
     Scaffold(
         modifier = Modifier
             .padding(16.dp)
     ) {
         Column {
+            Image(
+                painter = painterResource(id = R.drawable.jiafeiuser),
+                contentDescription = "Add user image",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(8.dp))
+            )
             OutlinedTextField(
-                value = email,
+                value = name,
                 leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = null) },
                 modifier = Modifier
                     .padding(8.dp)
                     .fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                label = { Text(text = "Email address") },
-                placeholder = { Text(text = "User email") },
+                label = { Text(text = "Product name") },
+                placeholder = { Text(text = "Name") },
                 onValueChange = {
-                    email = it
+                    name = it
                 }
             )
             OutlinedTextField(
-                value = password,
+                value = price,
                 leadingIcon = { Icon(imageVector = Icons.Default.MoreVert, contentDescription = null) },
                 modifier = Modifier
                     .padding(8.dp)
                     .fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                label = { Text(text = "Password") },
-                placeholder = { Text(text = "User password") },
+                label = { Text(text = "Product price - double") },
+                placeholder = { Text(text = "Price eg. 69.69") },
                 onValueChange = {
-                    password = it
+                    price = it
                 }
             )
+            OutlinedTextField(
+                value = description,
+                leadingIcon = { Icon(imageVector = Icons.Default.MoreVert, contentDescription = null) },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                label = { Text(text = "Product description") },
+                placeholder = { Text(text = "Description") },
+                onValueChange = {
+                    description = it
+                }
+            )
+            OutlinedTextField(
+                value = category,
+                leadingIcon = { Icon(imageVector = Icons.Default.MoreVert, contentDescription = null) },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                label = { Text(text = "Product category - int") },
+                placeholder = { Text(text = "Category eg. 0") },
+                onValueChange = {
+                    category = it
+                }
+            )
+            OutlinedTextField(
+                value = image,
+                leadingIcon = { Icon(imageVector = Icons.Default.MoreVert, contentDescription = null) },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                label = { Text(text = "Product image - link") },
+                placeholder = { Text(text = "Image eg. https://... ") },
+                onValueChange = {
+                    image = it
+                }
+            )
+            Button(
+                onClick = {
+                    val product = Product(
+                        name = name.text,
+                        price = price.text.toDouble(),
+                        description = description.text,
+                        category = category.text.toInt(),
+                        image = image.text
+                    )
+                    ApiRequests.addProduct(product)
+                    productsList.add(product)
+                    activity?.finish()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = "Add user",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
         }
     }
 }
