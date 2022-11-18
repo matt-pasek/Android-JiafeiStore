@@ -88,6 +88,8 @@ fun TopBar() {
         actions = {
             IconButton(
                 onClick = {
+                    ApiRequests.getProducts()
+                    ApiRequests.getUsers()
                     activity?.recreate()
                 }
             ) {

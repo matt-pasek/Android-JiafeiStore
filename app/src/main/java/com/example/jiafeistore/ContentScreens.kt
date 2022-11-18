@@ -137,6 +137,7 @@ fun ProductCard(product: Product) {
 @Composable
 fun ProductCardPreview() {
     ProductCard(Product(
+        1,
         "Jiafei Originals",
         10.00,
         1,
@@ -327,6 +328,16 @@ fun EditProductCard(product: Product) {
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSecondary
                     )
+                    Button(onClick = {
+                        product.id?.let { ApiRequests.deleteProduct(it.toInt()) }
+                    }) {
+                        Text(
+                            text = "Delete",
+                            fontSize = 16.sp,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSecondary
+                        )
+                    }
                 }
             }
         }

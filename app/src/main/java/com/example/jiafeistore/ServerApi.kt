@@ -3,7 +3,8 @@ package com.example.jiafeistore
 import retrofit2.Call
 import retrofit2.http.*
 
-data class Product (
+data class Product(
+    val id: Int?,
     val name: String,
     val price: Double,
     val category: Int,
@@ -22,7 +23,7 @@ data class User (
 
 interface ServerApi {
     companion object {
-        const val BASE_URL = "https://050f-2a02-a31a-c13f-3980-6c97-e45f-477e-6f0c.eu.ngrok.io/api/"
+        const val BASE_URL = "https://b088-31-61-238-234.eu.ngrok.io/api/"
     }
 
     // products
@@ -42,7 +43,7 @@ interface ServerApi {
     fun patchProduct(@Path("id") id: Int, @Body product: Product): Call<Product>
 
     @DELETE("products/{id}")
-    fun deleteProduct(@Path("id") id: Int): Call<Product>
+    fun deleteProduct(@Path("id") id: Int): Call<Int>
 
     // users
     @GET("users")

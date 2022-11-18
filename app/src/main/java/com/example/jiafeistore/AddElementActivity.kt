@@ -5,19 +5,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,14 +26,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 import com.example.jiafeistore.ui.theme.JiafeiStoreTheme
 import com.google.accompanist.pager.*
 import com.google.gson.Gson
-import kotlinx.coroutines.launch
 
 class AddElementActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +52,7 @@ class AddElementActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddElement(element: String) {
+    val activity = (LocalContext.current as? Activity)
     Scaffold(
         topBar = {
             SmallTopAppBar(
@@ -67,7 +60,9 @@ fun AddElement(element: String) {
                     Text(text = "JiafeiStore", fontSize = 25.sp)
                 },
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {
+                        activity?.finish()
+                    },) {
                         Icon(Icons.Filled.Close , "closeIcon", tint = MaterialTheme.colorScheme.onPrimary)
                     }
                 },
@@ -175,6 +170,7 @@ fun AddProduct() {
             Button(
                 onClick = {
                     val product = Product(
+                        id = null,
                         name = name.text,
                         price = price.text.toDouble(),
                         description = description.text,
