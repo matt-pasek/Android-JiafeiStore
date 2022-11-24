@@ -28,7 +28,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".AppActivity"
+            android:name=".appActivity.AppActivity"
             android:exported="true"
             android:theme="@style/Theme.JiafeiStore">
             <intent-filter>

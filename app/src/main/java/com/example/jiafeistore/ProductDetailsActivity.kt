@@ -1,26 +1,25 @@
 package com.example.jiafeistore
 
-import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.jiafeistore.appActivity.getCategoryName
+import com.example.jiafeistore.components.PopupTopBar
 import com.example.jiafeistore.ui.theme.JiafeiStoreTheme
 import com.google.accompanist.pager.*
 import com.google.gson.Gson
@@ -30,6 +29,7 @@ class ProductDetailsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val gson = Gson()
         val product = gson.fromJson(intent.getStringExtra("product"), Product::class.java)
+        Log.d("ProductDetailsActivity", "product: $product")
         setContent {
             JiafeiStoreTheme {
                 Surface(
@@ -45,28 +45,13 @@ class ProductDetailsActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetails(product: Product) {
-    val activity = (LocalContext.current as? Activity)
     Scaffold(
-        topBar = {
-            SmallTopAppBar(
-                title = {
-                    Text(text = "JiafeiStore", fontSize = 25.sp)
-                },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        activity?.finish()
-                    }) {
-                        Icon(Icons.Filled.Close , "backIcon", tint = MaterialTheme.colorScheme.onPrimary)
-                    }
-                },
-                colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary
-                ),
-            )
-        }){
+        topBar = { PopupTopBar() },
+    ){
+        paddingValues ->
         Column(
             modifier = Modifier
+                .padding(paddingValues)
                 .fillMaxWidth(),
         ) {
             AsyncImage(

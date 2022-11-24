@@ -1,6 +1,8 @@
-package com.example.jiafeistore
+package com.example.jiafeistore.appActivity
 
+import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.jiafeistore.*
 import com.google.gson.Gson
 
 
@@ -43,9 +46,8 @@ fun getCategoryName(category: Int): String {
 // get user role
 fun getUserRole(role: Int): String {
     return when (role) {
-        1 -> "Customer"
-        2 -> "Seller"
-        3 -> "Admin"
+        0 -> "Customer"
+        1 -> "Admin"
         else -> "Unknown"
     }
 }
@@ -136,14 +138,16 @@ fun ProductCard(product: Product) {
 @Preview(showBackground = true)
 @Composable
 fun ProductCardPreview() {
-    ProductCard(Product(
+    ProductCard(
+        Product(
         1,
         "Jiafei Originals",
         10.00,
         1,
         "https://i.imgur.com/0Z0Z9Zu.png",
         "Lorem ipsum"
-    ))
+    )
+    )
 }
 
 @Composable
@@ -211,8 +215,10 @@ fun UsersView(users: List<User>) {
             }
         }
     ) {
+        paddingValues ->
         LazyColumn(
             modifier = Modifier
+                .padding(paddingValues)
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
         ) {
@@ -251,8 +257,10 @@ fun ProductsView(products: List<Product>) {
             }
         }
     ) {
+        paddingValues ->
         LazyColumn(
             modifier = Modifier
+                .padding(paddingValues)
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
         ) {
@@ -277,6 +285,7 @@ fun ProductsView(products: List<Product>) {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun EditProductCard(product: Product) {
+    val activity = (LocalContext.current as? Activity)
     val context = LocalContext.current
     Row {
         Card(
@@ -329,7 +338,10 @@ fun EditProductCard(product: Product) {
                         color = MaterialTheme.colorScheme.onSecondary
                     )
                     Button(onClick = {
-                        product.id?.let { ApiRequests.deleteProduct(it.toInt()) }
+                        Log.i("Delete", "Product deleted")
+                        product.id?.let { ApiRequests.deleteProduct(it) }
+                        productsList.remove(product)
+                        activity?.recreate()
                     }) {
                         Text(
                             text = "Delete",

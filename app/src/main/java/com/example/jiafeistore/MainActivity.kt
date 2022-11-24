@@ -17,6 +17,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.jiafeistore.appActivity.AppActivity
+import com.example.jiafeistore.components.MainTopBar
 import com.example.jiafeistore.ui.theme.JiafeiStoreTheme
 
 class MainActivity : ComponentActivity() {
@@ -43,27 +45,10 @@ class MainActivity : ComponentActivity() {
 fun AppView() {
     val context = LocalContext.current
     Scaffold(
-        topBar = {
-            SmallTopAppBar(
-                title = {
-                    Text(text = "JiafeiStore", fontSize = 25.sp)
-                },
-                navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            /* TODO */
-                        },
-                        enabled = false,
-                    ) {
-                        Icon(Icons.Filled.ShoppingCart , "backIcon", tint = MaterialTheme.colorScheme.onPrimary)
-                    }
-                },
-                colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary
-                ),
-            )
-        }) {
+        topBar = { MainTopBar() },
+        modifier = Modifier.padding(0.dp),
+    ) {
+        paddingValues ->
         Column(
             modifier = Modifier
                 .padding(16.dp)

@@ -1,6 +1,9 @@
 package com.example.jiafeistore
 
 import android.util.Log
+import com.example.jiafeistore.appActivity.ordersList
+import com.example.jiafeistore.appActivity.productsList
+import com.example.jiafeistore.appActivity.usersList
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -45,14 +48,14 @@ class ApiRequests {
         }
 
         fun addProduct(product: Product) {
-            api.addProduct(product).enqueue(object : Callback<Product> {
-                override fun onResponse(call: Call<Product>, response: Response<Product>) {
+            api.addProduct(product).enqueue(object : Callback<Int> {
+                override fun onResponse(call: Call<Int>, response: Response<Int>) {
                     if (response.isSuccessful) {
                         Log.d("ApiRequests", "onResponse: ${response.body()}")
                     }
                 }
 
-                override fun onFailure(call: Call<Product>, t: Throwable) {
+                override fun onFailure(call: Call<Int>, t: Throwable) {
                     Log.e("ApiRequests", "onFailure: ${t.message}")
                 }
             })
@@ -118,7 +121,6 @@ class ApiRequests {
             })
         }
 
-        // add user post method return nothing
         fun addUser(user: User) {
             api.addUser(user).enqueue(object : Callback<Int> {
                 override fun onResponse(call: Call<Int>, response: Response<Int>) {
@@ -132,15 +134,16 @@ class ApiRequests {
                 }
             })
         }
+
         fun deleteUser(id: Int) {
-            api.deleteUser(id).enqueue(object : Callback<User> {
-                override fun onResponse(call: Call<User>, response: Response<User>) {
+            api.deleteUser(id).enqueue(object : Callback<Int> {
+                override fun onResponse(call: Call<Int>, response: Response<Int>) {
                     if (response.isSuccessful) {
                         Log.d("ApiRequests", "onResponse: ${response.body()}")
                     }
                 }
 
-                override fun onFailure(call: Call<User>, t: Throwable) {
+                override fun onFailure(call: Call<Int>, t: Throwable) {
                     Log.e("ApiRequests", "onFailure: ${t.message}")
                 }
             })
@@ -169,6 +172,52 @@ class ApiRequests {
                 }
 
                 override fun onFailure(call: Call<User>, t: Throwable) {
+                    Log.e("ApiRequests", "onFailure: ${t.message}")
+                }
+            })
+        }
+
+        fun addOrder(order: Order) {
+            api.addOrder(order).enqueue(object : Callback<Int> {
+                override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                    if (response.isSuccessful) {
+                        Log.d("ApiRequests", "onResponse: ${response.body()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<Int>, t: Throwable) {
+                    Log.e("ApiRequests", "onFailure: ${t.message}")
+                }
+            })
+        }
+
+        fun getOrders() {
+            api.getOrders().enqueue(object : Callback<MutableList<Order>> {
+                override fun onResponse(
+                    call: Call<MutableList<Order>>,
+                    response: Response<MutableList<Order>>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("ApiRequests", "onResponse: ${response.body()}")
+                        ordersList = response.body()!!
+                    }
+                }
+
+                override fun onFailure(call: Call<MutableList<Order>>, t: Throwable) {
+                    Log.e("ApiRequests", "onFailure: ${t.message}")
+                }
+            })
+        }
+
+        fun deleteOrder(id: Int) {
+            api.deleteOrder(id).enqueue(object : Callback<Int> {
+                override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                    if (response.isSuccessful) {
+                        Log.d("ApiRequests", "onResponse: ${response.body()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<Int>, t: Throwable) {
                     Log.e("ApiRequests", "onFailure: ${t.message}")
                 }
             })
