@@ -4,13 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Switch
-import androidx.compose.material.SwitchDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
@@ -82,7 +83,6 @@ fun ShoppingViewPreview() {
     ShoppingView(listOf())
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ProductCard(product: Product) {
     val context = LocalContext.current
@@ -91,14 +91,17 @@ fun ProductCard(product: Product) {
             modifier = Modifier
                 .padding(16.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .fillMaxWidth(),
-            backgroundColor = MaterialTheme.colorScheme.secondary,
-            onClick = {
-                val gson = Gson()
-                val intent = Intent(context, ProductDetailsActivity::class.java)
-                intent.putExtra("product", gson.toJson(product))
-                context.startActivity(intent)
-            }
+                .fillMaxWidth()
+                .clickable {
+                    val gson = Gson()
+                    val intent = Intent(context, ProductDetailsActivity::class.java)
+                    intent.putExtra("product", gson.toJson(product))
+                    context.startActivity(intent)
+                },
+            colors = CardDefaults.elevatedCardColors(
+                containerColor = MaterialTheme.colorScheme.secondary,
+                contentColor = MaterialTheme.colorScheme.onSecondary
+            ),
         ) {
             Column(
                 modifier = Modifier
@@ -176,10 +179,10 @@ fun AdminPanelView(users: List<User>, products: List<Product>) {
                 checked = checkedState.value,
                 onCheckedChange = { checkedState.value = it },
                 colors = SwitchDefaults.colors(
-                    checkedThumbColor = MaterialTheme.colorScheme.primary,
+                    checkedThumbColor = MaterialTheme.colorScheme.onSecondary,
                     uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                    checkedTrackColor = MaterialTheme.colorScheme.primary,
-                    uncheckedTrackColor = MaterialTheme.colorScheme.secondary
+                    checkedTrackColor = MaterialTheme.colorScheme.secondary,
+                    uncheckedTrackColor = MaterialTheme.colorScheme.background
                 )
             )
             Spacer(modifier = Modifier.padding(start = 8.dp))
@@ -282,7 +285,6 @@ fun ProductsView(products: List<Product>) {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun EditProductCard(product: Product) {
     val activity = (LocalContext.current as? Activity)
@@ -292,14 +294,17 @@ fun EditProductCard(product: Product) {
             modifier = Modifier
                 .padding(16.dp)
                 .clip(RoundedCornerShape(8.dp))
+                .clickable {
+                    val gson = Gson()
+                    val intent = Intent(context, EditProductActivity::class.java)
+                    intent.putExtra("product", gson.toJson(product))
+                    context.startActivity(intent)
+                }
                 .fillMaxWidth(),
-            backgroundColor = MaterialTheme.colorScheme.secondary,
-            onClick = {
-                val gson = Gson()
-                val intent = Intent(context, EditProductActivity::class.java)
-                intent.putExtra("product", gson.toJson(product))
-                context.startActivity(intent)
-            }
+            colors = CardDefaults.elevatedCardColors(
+                containerColor = MaterialTheme.colorScheme.secondary,
+                contentColor = MaterialTheme.colorScheme.onSecondary
+            ),
         ) {
             Row(
                 modifier = Modifier
@@ -356,7 +361,6 @@ fun EditProductCard(product: Product) {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun EditUserCard(user: User) {
     val context = LocalContext.current
@@ -365,14 +369,17 @@ fun EditUserCard(user: User) {
             modifier = Modifier
                 .padding(16.dp)
                 .clip(RoundedCornerShape(8.dp))
+                .clickable {
+                    val gson = Gson()
+                    val intent = Intent(context, EditUserActivity::class.java)
+                    intent.putExtra("user", gson.toJson(user))
+                    context.startActivity(intent)
+                }
                 .fillMaxWidth(),
-            backgroundColor = MaterialTheme.colorScheme.secondary,
-            onClick = {
-                val gson = Gson()
-                val intent = Intent(context, EditUserActivity::class.java)
-                intent.putExtra("user", gson.toJson(user))
-                context.startActivity(intent)
-            }
+            colors = CardDefaults.elevatedCardColors(
+                containerColor = MaterialTheme.colorScheme.secondary,
+                contentColor = MaterialTheme.colorScheme.onSecondary
+            ),
         ) {
             Row(
                 modifier = Modifier

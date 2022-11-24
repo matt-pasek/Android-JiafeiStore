@@ -1,6 +1,7 @@
 package com.example.jiafeistore.components
 
 import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
 import com.example.jiafeistore.ApiRequests
+import com.example.jiafeistore.ShoppingCartActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -88,7 +90,11 @@ fun AppTopBar() {
             ) {
                 Icon(Icons.Filled.Refresh , "refreshIcon", tint = MaterialTheme.colorScheme.onPrimary)
             }
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(
+                onClick = {
+                    activity?.startActivity(Intent(activity, ShoppingCartActivity::class.java))
+                }
+            ) {
                 Icon(Icons.Filled.ShoppingCart , "cartIcon", tint = MaterialTheme.colorScheme.onPrimary)
             }
         },
