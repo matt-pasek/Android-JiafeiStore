@@ -22,23 +22,34 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.jiafeistore.appActivity.cartList
 import com.example.jiafeistore.appActivity.getCategoryName
 import com.example.jiafeistore.appActivity.productsList
+import com.example.jiafeistore.components.LoginForm
+import com.example.jiafeistore.components.PopupTopBar
 import com.example.jiafeistore.ui.theme.JiafeiStoreTheme
 
 class ShoppingCartActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             JiafeiStoreTheme {
                 // A surface container using the 'background' color from the theme
-                val cartItems = List(3) { productsList.random() }
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // TODO: add a top bar
-                    CartView(cartItems)
+                    Scaffold(
+                        topBar = { PopupTopBar() }
+                    ) { paddingValues ->
+                        if (cartList.isNotEmpty()) {
+                            CartView(cartList, paddingValues)
+                        } else {
+                            Text(text = "Your cart is empty", modifier = Modifier.padding(paddingValues))
+                        }
+                    }
+
                 }
             }
         }
@@ -47,9 +58,9 @@ class ShoppingCartActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CartView(cartItems: List<Product>) {
+fun CartView(cartItems: List<Product>, pad: PaddingValues) {
     Scaffold(
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier.padding(pad),
     ) {
         paddingValues ->
         LazyColumn(
@@ -78,6 +89,7 @@ fun CartView(cartItems: List<Product>) {
 
 @Composable
 fun CartItem(product: Product) {
+    val activity = LocalContext.current as Activity
     Row(
         // align the content vertically
         verticalAlignment = Alignment.CenterVertically,
@@ -89,6 +101,8 @@ fun CartItem(product: Product) {
                     .clip(RoundedCornerShape(6.dp))
                     .clickable {
                         Log.d("Cart", "Delete item")
+                        cartList.remove(product)
+                        activity.recreate()
                     },
                 colors = CardDefaults.elevatedCardColors(
                     containerColor = MaterialTheme.colorScheme.secondary,

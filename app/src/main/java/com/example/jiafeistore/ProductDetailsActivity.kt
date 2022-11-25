@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.jiafeistore.appActivity.cartList
 import com.example.jiafeistore.appActivity.getCategoryName
 import com.example.jiafeistore.components.PopupTopBar
 import com.example.jiafeistore.ui.theme.JiafeiStoreTheme
@@ -87,7 +88,9 @@ fun ProductDetails(product: Product) {
                     modifier = Modifier
                         .safeContentPadding()
                         .padding(top = 10.dp),
-                    onClick = { /*TODO*/ }
+                    onClick = {
+                        cartList.add(product)
+                    }
                 ) {
                     Icon(Icons.Filled.ShoppingCart , "buyIcon", tint = MaterialTheme.colorScheme.onPrimary)
                     Text(text = "Kup teraz")
